@@ -1,6 +1,9 @@
 <template>
-  <div class="home">
+  <div>
     <header-top></header-top>
+    <el-container>
+      <el-main>sign up</el-main>
+    </el-container>
     <footer-bottom></footer-bottom>
   </div>
 </template>
