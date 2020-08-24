@@ -16,18 +16,24 @@ const enter = r => require.ensure([], () => r(require('@/views/Enter')), 'enter'
 const routes = [
   {
     path: '/',
-    name: 'Home',
+    redirect: '/home',
+    component: home
+
+  },
+  {
+    path: '/home',
+    name: 'home',
     component: home
 
   },
   {
     path: '/signup',
-    name: 'Signup',
+    name: 'signup',
     component: signup
   },
   {
     path: '/about',
-    name: 'About',
+    name: 'about',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.

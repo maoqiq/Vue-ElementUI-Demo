@@ -1,6 +1,6 @@
 <template>
   <div class="center">
-    <img src="../assets/images/img_submit_success.png">
+    <img src="../assets/images/icons/img_submit_success.png">
     <p class="submit_success_tips">报名成功</p>
   </div>
 </template>

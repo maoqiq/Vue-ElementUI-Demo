@@ -5,6 +5,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import { provinceAndCityData, regionData, provinceAndCityDataPlus, regionDataPlus, CodeToText, TextToCode } from 'element-china-area-data'
+import * as http from './utils/http'
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)
@@ -12,6 +13,7 @@ Vue.use(ElementUI)
 new Vue({
   router,
   store,
+  http,
   provinceAndCityData,
   regionData,
   provinceAndCityDataPlus,

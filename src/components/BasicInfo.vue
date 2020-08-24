@@ -2,16 +2,30 @@
   <div>
     <el-form label-position="left" :model="ruleForm" :rules="rules" ref="ruleForm" label-width="180px">
       <div class="center">
-        <el-form-item label="姓名" prop="name">
-          <el-col :span="6">
-            <el-input v-model="ruleForm.name" placeholder="请输入姓名"></el-input>
-          </el-col>
-        </el-form-item>
-        <el-form-item label="身份证号" prop="idNumber">
-          <el-col :span="6">
-            <el-input v-model="ruleForm.idNumber" placeholder="请输入18位身份证号码"></el-input>
-          </el-col>
-        </el-form-item>
+        <div class="info_left">
+          <el-form-item label="姓名" prop="name">
+            <el-col :span="6">
+              <el-input v-model="ruleForm.name" placeholder="请输入姓名"></el-input>
+            </el-col>
+          </el-form-item>
+          <el-form-item label="身份证号" prop="idNumber">
+            <el-col :span="6">
+              <el-input v-model="ruleForm.idNumber" placeholder="请输入18位身份证号码"></el-input>
+            </el-col>
+          </el-form-item>
+        </div>
+        <div class="info_right">
+          <el-upload
+            class="avatar-uploader"
+            action="https://jsonplaceholder.typicode.com/posts/"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+            :before-upload="beforeAvatarUpload">
+            <img v-if="imageUrl" :src="imageUrl" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            <p class="upload_tips">上传1寸免冠照片</p>
+          </el-upload>
+        </div>
         <el-form-item label="本人所在地" prop="region">
           <el-select style="width: 264px; margin-right: 40px;"
                   v-model="selectProvince"
@@ -125,6 +139,7 @@ export default {
       schoolSelectProvince: {},
       schoolSelectCity: {},
       schoolRegionStr: '',
+      imageUrl: '',
       ruleForm: {
         name: '',
         idNumber: '',
@@ -175,6 +190,21 @@ export default {
       })
       this.ruleForm.grade = Array(item.label)
     },
+    handleAvatarSuccess (res, file) {
+      this.imageUrl = URL.createObjectURL(file.raw)
+    },
+    beforeAvatarUpload (file) {
+      const isJPG = file.type === 'image/jpeg'
+      const isPNG = file.type === 'image/png'
+      const isLt2M = file.size / 1024 / 1024 < 2
+      if (!isJPG && !isPNG) {
+        this.$message.error('上传头像图片必须是 JPG/PNG 格式!')
+      }
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!')
+      }
+      return isJPG && isLt2M
+    },
     // handleSelectCity (value) {
     //   console.log(value)
     // },
@@ -219,9 +249,15 @@ export default {
 
 <style lang="scss">
 .center{
+  position: relative;
   .sub_title{
     text-align: left;
     padding: 18px 0 22px 0;
+  }
+  .info_right{
+    position: absolute;
+    top: 0;
+    left: 39.4%;
   }
 }
 .background_gray{
@@ -243,5 +279,37 @@ export default {
 .submit_form{
   float: right;
   margin: 80px 0;
+}
+.avatar-uploader .el-upload {
+  background: rgba(0,0,0,0.09);
+  border: 1px solid rgba(0,0,0,0.25);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+    }
+    .avatar-uploader-icon {
+    font-size: 28px;
+    color: #ffffff;
+    width: 96px;
+    height: 120px;
+    line-height: 118px;
+    text-align: center;
+    }
+    .upload_tips{
+    position: absolute;
+    bottom: 12px;
+    left: center;
+    left: 0;
+    right: 0;
+    font-size: 10px;
+    color: #FFFFFF;
+    }
+    .avatar {
+    width: 96px;
+    height: 120px;
+    display: block;
+    }
 }
 </style>

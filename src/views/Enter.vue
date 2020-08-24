@@ -1,35 +1,33 @@
 <template>
   <div>
-    <el-container>
-      <el-main>
-        <div class="custom-container">
-          <div class="center">
-            <div class="title">
-              <div>填写信息</div>
-              <div class="tips">
-                <span>请确保录入信息真实有效，以确保填写成功后我们能联系到您</span>
-              </div>
-            </div>
-          </div>
-          <div class="content">
-            <div class="center steps">
-              <el-steps :active="active" :align-center='true'>
-                <el-step :class="active== key+1 ? stepActive: '' " :title="item.title" @click.native ="stepClick(item.index)" v-for="item in stepData" :key ="item.title"></el-step>
-              </el-steps>
-            </div>
-            <div class="basicInfo" v-if="active===0">
-              <basic-info @nextStep="changeStep"></basic-info>
-            </div>
-            <div class="uploadSample" v-if="active===1">
-              <registration @nextStep="changeStep"></registration>
-            </div>
-            <div class="success" v-if="active===2">
-              <submit-success></submit-success>
+    <el-main>
+      <div class="custom-container">
+        <div class="center">
+          <div class="title">
+            <div>填写信息</div>
+            <div class="tips">
+              <span>请确保录入信息真实有效，以确保填写成功后我们能联系到您</span>
             </div>
           </div>
         </div>
-      </el-main>
-    </el-container>
+        <div class="content">
+          <div class="center steps">
+            <el-steps :active="active" :align-center='true'>
+              <el-step :class="active== key+1 ? stepActive: '' " :title="item.title" @click.native ="stepClick(item.index)" v-for="item in stepData" :key ="item.title"></el-step>
+            </el-steps>
+          </div>
+          <div class="basicInfo" v-if="active===0">
+            <basic-info @nextStep="changeStep"></basic-info>
+          </div>
+          <div class="uploadSample" v-if="active===1">
+            <registration @nextStep="changeStep"></registration>
+          </div>
+          <div class="success" v-if="active===2">
+            <submit-success></submit-success>
+          </div>
+        </div>
+      </div>
+    </el-main>
   </div>
 </template>
 
@@ -41,6 +39,7 @@ import SubmitSuccess from '@/components/SubmitSuccess.vue'
 export default {
   data () {
     return {
+      token: '',
       active: 0, // 控制步骤条及填写条目的显示
       stepData: [
         { index: 0, title: '基本信息' },
@@ -54,6 +53,8 @@ export default {
     BasicInfo,
     Registration,
     SubmitSuccess
+  },
+  created () {
   },
   methods: {
     stepClick (stepItem) {
@@ -90,7 +91,7 @@ export default {
       color: #D58217;
       letter-spacing: 0;
       span{
-        background: url('../assets/images/icon_tips.png') no-repeat left center / 18px 18px;
+        background: url('../assets/images/icons/icon_tips.png') no-repeat left center / 18px 18px;
         margin-left: 20px;
         padding-left: 28px;
         line-height: 30px;
@@ -145,5 +146,10 @@ export default {
       }
     }
   }
+}
+.el-input__inner{
+  height: 46px;
+  line-height: 46px;
+  border: 1px solid rgba(0,0,0,0.25);
 }
 </style>
